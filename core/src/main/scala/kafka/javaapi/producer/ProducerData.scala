@@ -25,6 +25,8 @@ class ProducerData[K, V](private val topic: String,
   def this(t: String, d: java.util.List[V]) = this(topic = t, key = null.asInstanceOf[K], data = d)
 
   def this(t: String, d: V) = this(topic = t, key = null.asInstanceOf[K], data = asList(List(d)))
+  
+  def this(t: String, k: K, d: V) = this(topic = t, key = k, data = List(d))
 
   def getTopic: String = topic
 
