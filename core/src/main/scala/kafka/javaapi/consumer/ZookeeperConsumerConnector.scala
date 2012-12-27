@@ -102,6 +102,13 @@ private[kafka] class ZookeeperConsumerConnector(val config: ConsumerConfig,
   def commitOffsets() {
     underlying.commitOffsets
   }
+ 
+  def commitOffsets(topic: String, partitionOffsetMap: java.util.Map[String,java.lang.Long]) {
+    import scala.collection.JavaConversions._
+    val scalaPartitionOffsetMap: Map[String, Long] = 
+      Map.empty[String, Long] ++ asMap(partitionOffsetMap.asInstanceOf[java.util.Map[String, Long]])
+    underlying.commitOffsets(topic, scalaPartitionOffsetMap)
+  }
 
   def shutdown() {
     underlying.shutdown

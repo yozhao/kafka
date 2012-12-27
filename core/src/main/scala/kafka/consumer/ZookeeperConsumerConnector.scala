@@ -260,6 +260,26 @@ private[kafka] class ZookeeperConsumerConnector(val config: ConsumerConfig,
       }
     }
   }
+  
+  def commitOffsets(topic: String, partitionOffsetMap: scala.collection.Map[String, Long]) {
+    if (zkClient == null) {
+      error("zk client is null. Cannot commit offsets")
+      return
+    }
+    val topicDirs = new ZKGroupTopicDirs(config.groupId, topic)
+    for ((partition, offset) <- partitionOffsetMap) {
+        try {
+          updatePersistentPath(zkClient, topicDirs.consumerOffsetDir + "/" + partition,
+            offset.toString)
+        }
+        catch {
+          case t: Throwable =>
+          // log it and let it go
+          warn("exception during commitOffsets",  t)
+        }
+        debug("Committed offset " + offset + " for partition " + partition)
+      }
+  }
 
   // for JMX
   def getPartOwnerStats(): String = {

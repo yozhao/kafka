@@ -63,6 +63,11 @@ public interface ConsumerConnector {
   public void commitOffsets();
 
   /**
+   *  Commit the offsets of some partitions in some topic
+   */
+  public void commitOffsets(String topic, Map<String, Long> partitionOffsetMap);
+  
+  /**
    *  Shut down the connector
    */
   public void shutdown();

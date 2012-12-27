@@ -85,7 +85,8 @@ class ConsumerIterator[T](private val channel: BlockingQueue[FetchedDataChunk],
     val item = localCurrent.next()
     consumedOffset = item.offset
 
-    new MessageAndMetadata(decoder.toEvent(item.message), currentTopicInfo.topic)
+    new MessageAndMetadata(decoder.toEvent(item.message), currentTopicInfo.topic,
+                           currentTopicInfo.partition.name, item.offset)
   }
 
   def clearCurrentChunk() {
