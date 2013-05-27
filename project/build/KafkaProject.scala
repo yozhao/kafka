@@ -222,6 +222,18 @@ class KafkaProject(info: ProjectInfo) extends ParentProject(info) with IdeaProje
       val jodaTime = "joda-time" % "joda-time" % "1.6"
     }
   }
+  
+  override def managedStyle = ManagedStyle.Maven
+  
+  val publishTo = {
+    val nexus = "http://maven.n.miliao.com:8081/nexus/"
+    if (projectVersion.value.toString.trim.endsWith("SNAPSHOT"))
+      "snapshots" at nexus + "content/repositories/snapshots/"
+    else
+      "releases"  at nexus + "content/repositories/releases/"
+  }
+  
+  Credentials(Path.userHome / ".ivy2" / ".credentials", log)
 
   trait TestDependencies {
     val easymock = "org.easymock" % "easymock" % "3.0" % "test"
