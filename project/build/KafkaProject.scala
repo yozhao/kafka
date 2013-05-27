@@ -60,7 +60,7 @@ class KafkaProject(info: ProjectInfo) extends ParentProject(info) with IdeaProje
       </dependency>
     </dependencies>
 
-    override def artifactID = "kafka"
+    override def artifactID = "core-kafka_2.8.0"
     override def filterScalaJars = false
 
     // build the executable jar's classpath.
