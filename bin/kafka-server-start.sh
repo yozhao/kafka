@@ -22,4 +22,4 @@ fi
 
 export JMX_PORT=${JMX_PORT:-9999}
 
-$(dirname $0)/kafka-run-class.sh kafka.Kafka $@
+$(dirname $0)/kafka-run-class.sh kafka.Kafka $@ &
